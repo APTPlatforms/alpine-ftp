@@ -1,0 +1,8 @@
+version: "2"
+
+services:
+    vsftpd:
+        image: aptplatforms/vsftpd-alpine:latest
+        build: .
+
+# vim: set filetype=yaml :

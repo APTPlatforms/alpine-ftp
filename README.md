@@ -1,37 +1,36 @@
 # vsftpd-alpine
-Docker image of vsftpd server based on Alpine 3.4 
+Docker image of vsftpd server based on Alpine 3.7
 
-##Exemple usage
+### Notes
+
+The user's home directory is `/data`. That's where you want to mount your volumes.
+
+### Example usage
+
 ```
 docker run \
   --name vsftpd \
   -d \
-  -e FTP_USER=www \
-  -e FTP_PASS=my-password \
-  -e PASV_ADDRESS=5.6.7.8 \
-  -e PASV_MIN=21100 \
-  -e PASV_MAX=21110 \
+  -e USER=www \
+  -e PASS=my-password \
   -p 21:21 \
   -p 21100-21110:21100-21110 \
-  avenus/vsftpd-alpine
+  aptplatforms/vsftpd-alpine
 ```
 
-##Exemple usage in compose file
+### Example usage in docker-compose file
+
 ```
-version: '3'
+version: '2'
 services:
-  ftp:
-   image: avenus/vsftpd-alpine
-   ports:
-     - "35000:21"
-     - "21100-21110:21100-21110"
+  vsftpd:
+    image: aptplatforms/vsftpd-alpine
+    ports:
+      - "35000:21"
+      - "21100-21110:21100-21110"
    volumes:
-    - some-volume:/home/user/
-    - /home/ftp/logs/:/var/log/
+     - ftp-data:/data
    environment:
-    - FTP_USER=user
-    - FTP_PASS=my-password
-    - PASV_ADDRESS=5.6.7.8
-    - PASV_MIN=21100
-    - PASV_MAX=21110
+     USER: user
+     PASS: my-password
 ```
