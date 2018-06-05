@@ -4,7 +4,7 @@ LABEL maintainer="Chris Cosby <chris.cosby@aptplatforms.com>"
 
 RUN apk update \
  && apk upgrade \
- && apk add vsftpd augeas
+ && apk add vsftpd augeas tzdata curl
 
 ENV USER=None \
     PASS=None \

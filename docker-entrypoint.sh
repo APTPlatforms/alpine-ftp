@@ -2,8 +2,14 @@
 
 if [ -z "$PASV_ADDRESS" -o "$PASV_ADDRESS" = None ]
 then
-    echo "ERROR: PASV_ADDRESS must be set."
-    exit 1
+    PASV_ADDRESS=`curl -f -s http://169.254.169.254/latest/meta-data/public-ipv4`
+    if [ $? -eq 0 ]
+    then
+        echo "Using meta-data public-ipv4 ($PASV_ADDRESS) value for PASV_ADDRESS"
+    else
+        echo "ERROR: PASV_ADDRESS must be set."
+        exit 1
+    fi
 fi
 
 if [ -z "$USER" -o "$USER" = None ]
